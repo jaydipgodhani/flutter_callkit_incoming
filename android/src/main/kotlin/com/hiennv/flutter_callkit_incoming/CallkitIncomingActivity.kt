@@ -292,8 +292,10 @@ class CallkitIncomingActivity : Activity() {
             keyguardManager.requestDismissKeyguard(this, null)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            android.util.Log.d("TAG", "onAcceptClick: Finish task 1")
             finishAndRemoveTask()
         } else {
+            android.util.Log.d("TAG", "onAcceptClick: Finish task 2")
             finish()
         }
     }
