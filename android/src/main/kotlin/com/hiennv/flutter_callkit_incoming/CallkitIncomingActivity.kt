@@ -45,6 +45,7 @@ import android.os.PowerManager.WakeLock
 import android.text.TextUtils
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_TEXT_ACCEPT
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_TEXT_DECLINE
+import android.util.Log
 
 
 class CallkitIncomingActivity : Activity() {
@@ -292,10 +293,10 @@ class CallkitIncomingActivity : Activity() {
             keyguardManager.requestDismissKeyguard(this, null)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            android.util.Log.d("TAG", "onAcceptClick: Finish task 1")
+            Log.d("TAG", "onAcceptClick: Finish task 1")
             finishAndRemoveTask()
         } else {
-            android.util.Log.d("TAG", "onAcceptClick: Finish task 2")
+            Log.d("TAG", "onAcceptClick: Finish task 2")
             finish()
         }
     }
