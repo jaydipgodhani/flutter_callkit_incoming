@@ -24,10 +24,10 @@ class CallkitSoundPlayerService : Service() {
     }
 
     override fun onCreate() {
+        super.onCreate()
         this.prepare()
         this.playSound(intent)
         this.playVibrator()
-        super.onCreate()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
