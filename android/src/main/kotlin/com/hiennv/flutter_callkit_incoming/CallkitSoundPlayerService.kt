@@ -152,4 +152,13 @@ class CallkitSoundPlayerService : Service() {
             null
         }
     }
+
+    @Override
+    fun onTaskRemoved(rootIntent: Intent?) {
+        Log.d(TAG, "onTaskRemoved: removed")
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.setTimeInMillis(System.currentTimeMillis() + 10000)
+        (getSystemService(Context.ALARM_SERVICE) as AlarmManager).setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), PendingIntent.getService(getApplicationContext(), 0, Intent(getApplicationContext(), RegisterReceiverService::class.java), 0))
+        super.onTaskRemoved(rootIntent)
+    }
 }
