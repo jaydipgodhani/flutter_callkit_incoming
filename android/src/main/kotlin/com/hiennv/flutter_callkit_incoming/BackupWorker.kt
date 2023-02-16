@@ -1,17 +1,6 @@
-package com.hiennv.flutter_callkit_incoming
+class BackupWorker(@NonNull context: Context?, @NonNull workerParams: WorkerParameters?) : Worker(context, workerParams) {
+    @NonNull
 
-import android.app.Service
-import android.content.Context
-import android.content.Intent
-import android.media.AudioAttributes
-import android.media.AudioManager
-import android.media.MediaPlayer
-import android.media.RingtoneManager
-import android.net.Uri
-import android.os.*
-import android.text.TextUtils
-
-class CallkitSoundPlayerService : Service() {
 
     private var vibrator: Vibrator? = null
     private var audioManager: AudioManager? = null
@@ -19,15 +8,16 @@ class CallkitSoundPlayerService : Service() {
     private var mediaPlayer: MediaPlayer? = null
     private var data: Bundle? = null
 
-    override fun onBind(p0: Intent?): IBinder? {
-        return null
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    @Override
+    fun doWork(): Result {
         this.prepare()
         this.playSound(intent)
         this.playVibrator()
-        return START_STICKY;
+        return Result.success()
+    }
+
+    companion object {
+        private const val TAG = "BackupWorker"
     }
 
     override fun onDestroy() {
