@@ -116,12 +116,22 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                         val soundPlayerServiceIntent =
                             Intent(context, CallkitSoundPlayerService::class.java)
                         soundPlayerServiceIntent.putExtras(data)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            val request: OneTimeWorkRequest = Builder(BackupWorker::class.java).addTag("BACKUP_WORKER_TAG").build()
+                            WorkManager.getInstance(context).enqueue(request)
+                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            context.startForegroundService(soundPlayerServiceIntent)
+                        } else {
+                            context.startService(soundPlayerServiceIntent)
+                        }
+
+                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             context.startForegroundService(soundPlayerServiceIntent)
                         } else {
                             //context.startService(intent)
                             context.startService(soundPlayerServiceIntent)
-                        }
+                        }*
                     }
                 } catch (error: Exception) {
                     error.printStackTrace()
