@@ -138,7 +138,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
                             }
                         } else {
-                            context.startForegroundService(soundPlayerServiceIntent)
+                            ContextCompat.startForegroundService(context, soundPlayerServiceIntent)
                         }
 
                         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
