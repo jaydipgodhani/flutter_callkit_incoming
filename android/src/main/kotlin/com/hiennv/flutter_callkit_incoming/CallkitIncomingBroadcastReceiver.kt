@@ -117,11 +117,27 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     addCall(context, Data.fromBundle(data))
 
                     if (callkitNotificationManager.incomingChannelEnabled()) {
-                        val soundPlayerServiceIntent =
-                            Intent(context, CallkitSoundPlayerService::class.java)
-                        soundPlayerServiceIntent.putExtras(data)
+                        if (callkitNotificationManager.incomingChannelEnabled()) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                                val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
+                                val data = androidx.work.Data.Builder()
+                                data.putString("file_path", data)
+                                compressionWork.setInputData(data.build())
+                                WorkManager.getInstance().enqueue(compressionWork.build())
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                val soundPlayerServiceIntent =
+                                        Intent(context, CallkitSoundPlayerService::class.java)
+                                soundPlayerServiceIntent.putExtras(data)
+                                context.startForegroundService(soundPlayerServiceIntent)
+                            } else {
+                                val soundPlayerServiceIntent =
+                                        Intent(context, CallkitSoundPlayerService::class.java)
+                                soundPlayerServiceIntent.putExtras(data)
+                                context.startService(soundPlayerServiceIntent)
+                            }
+
+                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                             val alarmManager = ContextCompat.getSystemService(context, AlarmManager::class.java)
                             if (alarmManager?.canScheduleExactAlarms() == true) {
                                 alarmManager.setExactAndAllowWhileIdle(
@@ -139,7 +155,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                             }
                         } else {
                             ContextCompat.startForegroundService(context, soundPlayerServiceIntent)
-                        }
+                        }*/
 
                         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             context.startForegroundService(soundPlayerServiceIntent)
