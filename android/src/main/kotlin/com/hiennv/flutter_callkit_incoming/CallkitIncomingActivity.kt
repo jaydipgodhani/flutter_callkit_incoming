@@ -260,9 +260,6 @@ class CallkitIncomingActivity : Activity() {
         ivAcceptCall.setOnClickListener {
             onAcceptClick()
         }
-        ivDeclineCall.setOnClickListener {
-
-        }
     }
 
     private fun animateAcceptCall() {
