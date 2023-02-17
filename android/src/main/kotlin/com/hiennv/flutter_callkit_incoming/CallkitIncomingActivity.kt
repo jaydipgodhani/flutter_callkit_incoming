@@ -261,7 +261,7 @@ class CallkitIncomingActivity : Activity() {
             onAcceptClick()
         }
         ivDeclineCall.setOnClickListener {
-            onDeclineClick()
+
         }
     }
 
@@ -296,10 +296,6 @@ class CallkitIncomingActivity : Activity() {
         } else {
             finish()
         }
-    }
-
-    private fun onDeclineClick() {
-        
     }
 
     private fun getPicassoInstance(context: Context, headers: HashMap<String, Any?>): Picasso {
