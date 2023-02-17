@@ -301,7 +301,7 @@ class CallkitIncomingActivity : Activity() {
     private fun onDeclineClick() {
         val soundPlayerServiceIntent =
                 Intent(applicationContext, CallkitSoundPlayerService::class.java)
-        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(applicationContext, 123, intent, 0)
+        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(applicationContext, 123, soundPlayerServiceIntent, 0)
 
 
         val data = intent.extras?.getBundle(EXTRA_CALLKIT_INCOMING_DATA)
