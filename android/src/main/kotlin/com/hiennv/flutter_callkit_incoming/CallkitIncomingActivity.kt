@@ -261,7 +261,7 @@ class CallkitIncomingActivity : Activity() {
             onAcceptClick()
         }
         ivDeclineCall.setOnClickListener {
-
+            onDeclineClick()
         }
     }
 
@@ -296,6 +296,12 @@ class CallkitIncomingActivity : Activity() {
         } else {
             finish()
         }
+    }
+
+    private fun onDeclineClick() {
+        val data = intent.extras?.getBundle(EXTRA_CALLKIT_INCOMING_DATA)
+        val intent =
+                CallkitIncomingBroadcastReceiver.getIntentDecline(this@CallkitIncomingActivity, data)
     }
 
     private fun getPicassoInstance(context: Context, headers: HashMap<String, Any?>): Picasso {
