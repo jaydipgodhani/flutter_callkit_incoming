@@ -299,7 +299,7 @@ class CallkitIncomingActivity : Activity() {
     }
 
     private fun onDeclineClick() {
-        val intent = Intent(this, Mote::class.java)
+        val intent = Intent(this, CallkitSoundPlayerService::class.java)
         val pendingIntent: PendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 123, intent, 0)
         val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
