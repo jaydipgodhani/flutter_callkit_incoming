@@ -47,6 +47,7 @@ import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Comp
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_TEXT_DECLINE
 import androidx.core.content.ContextCompat
 import android.app.AlarmManager
+import android.util.Log
 
 
 class CallkitIncomingActivity : Activity() {
@@ -308,11 +309,13 @@ class CallkitIncomingActivity : Activity() {
         alarmManager.cancel(pendingIntent)*/
 
         //val alarmManager = ContextCompat.getSystemService(applicationContext, AlarmManager::class.java)
+        Log.d("CALLKIT", "fetchDogResponse: 1")
         val soundPlayerServiceIntent =
                 Intent(applicationContext, CallkitSoundPlayerService::class.java)
         val pendingIntent: PendingIntent = PendingIntent.getBroadcast(applicationContext, 123, soundPlayerServiceIntent, 0)
         val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
+        Log.d("CALLKIT", "fetchDogResponse: 2")
 
         val data = intent.extras?.getBundle(EXTRA_CALLKIT_INCOMING_DATA)
         val intent =
