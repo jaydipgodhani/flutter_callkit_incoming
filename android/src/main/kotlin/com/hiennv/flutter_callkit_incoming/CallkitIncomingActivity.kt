@@ -302,6 +302,8 @@ class CallkitIncomingActivity : Activity() {
         val soundPlayerServiceIntent =
                 Intent(applicationContext, CallkitSoundPlayerService::class.java)
         val pendingIntent: PendingIntent = PendingIntent.getBroadcast(applicationContext, 123, soundPlayerServiceIntent, 0)
+        val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(pendingIntent)
 
 
         val data = intent.extras?.getBundle(EXTRA_CALLKIT_INCOMING_DATA)
