@@ -47,7 +47,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
         const val EXTRA_CALLKIT_HEADERS = "EXTRA_CALLKIT_HEADERS"
         const val EXTRA_CALLKIT_IS_CUSTOM_NOTIFICATION = "EXTRA_CALLKIT_IS_CUSTOM_NOTIFICATION"
         const val EXTRA_CALLKIT_IS_CUSTOM_SMALL_EX_NOTIFICATION =
-            "EXTRA_CALLKIT_IS_CUSTOM_SMALL_EX_NOTIFICATION"
+                "EXTRA_CALLKIT_IS_CUSTOM_SMALL_EX_NOTIFICATION"
         const val EXTRA_CALLKIT_IS_SHOW_LOGO = "EXTRA_CALLKIT_IS_SHOW_LOGO"
         const val EXTRA_CALLKIT_IS_SHOW_MISSED_CALL_NOTIFICATION = "EXTRA_CALLKIT_IS_SHOW_MISSED_CALL_NOTIFICATION"
         const val EXTRA_CALLKIT_IS_SHOW_CALLBACK = "EXTRA_CALLKIT_IS_SHOW_CALLBACK"
@@ -117,25 +117,36 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     addCall(context, Data.fromBundle(data))
 
                     if (callkitNotificationManager.incomingChannelEnabled()) {
-                        if (callkitNotificationManager.incomingChannelEnabled()) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                                /*val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
-                                val data = androidx.work.Data.Builder()
-                                data.putString("file_path", data)
-                                compressionWork.setInputData(data.build())
-                                WorkManager.getInstance().enqueue(compressionWork.build())*/
+                        val soundPlayerServiceIntent =
+                                Intent(context, CallkitSoundPlayerService::class.java)
+                        soundPlayerServiceIntent.putExtras(data)
 
-                            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                val soundPlayerServiceIntent =
-                                        Intent(context, CallkitSoundPlayerService::class.java)
-                                soundPlayerServiceIntent.putExtras(data)
-                                context.startForegroundService(soundPlayerServiceIntent)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            val alarmManager = ContextCompat.getSystemService(context, AlarmManager::class.java)
+                            if (alarmManager?.canScheduleExactAlarms() == true) {
+                                alarmManager.setExactAndAllowWhileIdle(
+                                        AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                                        SystemClock.elapsedRealtime() /*+ GO_OFF_OFFSET*/,
+                                        PendingIntent.getForegroundService(
+                                                context,
+                                                123,
+                                                soundPlayerServiceIntent,
+                                                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                                        )
+                                )
                             } else {
-                                val soundPlayerServiceIntent =
-                                        Intent(context, CallkitSoundPlayerService::class.java)
-                                soundPlayerServiceIntent.putExtras(data)
-                                context.startService(soundPlayerServiceIntent)
+
                             }
+                        } else {
+                            ContextCompat.startForegroundService(context, soundPlayerServiceIntent)
+                        }
+
+                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            context.startForegroundService(soundPlayerServiceIntent)
+                        } else {
+                            //context.startService(intent)
+                            context.startService(soundPlayerServiceIntent)
+                        }*/
                     }
                 } catch (error: Exception) {
                     error.printStackTrace()
@@ -209,23 +220,23 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
     @Suppress("UNCHECKED_CAST")
     private fun sendEventFlutter(event: String, data: Bundle) {
         val android = mapOf(
-            "isCustomNotification" to data.getBoolean(EXTRA_CALLKIT_IS_CUSTOM_NOTIFICATION, false),
-            "isCustomSmallExNotification" to data.getBoolean(
-                EXTRA_CALLKIT_IS_CUSTOM_SMALL_EX_NOTIFICATION,
-                false
-            ),
-            "ringtonePath" to data.getString(EXTRA_CALLKIT_RINGTONE_PATH, ""),
-            "backgroundColor" to data.getString(EXTRA_CALLKIT_BACKGROUND_COLOR, ""),
-            "backgroundUrl" to data.getString(EXTRA_CALLKIT_BACKGROUND_URL, ""),
-            "actionColor" to data.getString(EXTRA_CALLKIT_ACTION_COLOR, ""),
-            "incomingCallNotificationChannelName" to data.getString(
-                EXTRA_CALLKIT_INCOMING_CALL_NOTIFICATION_CHANNEL_NAME,
-                ""
-            ),
-            "missedCallNotificationChannelName" to data.getString(
-                EXTRA_CALLKIT_MISSED_CALL_NOTIFICATION_CHANNEL_NAME,
-                ""
-            ),
+                "isCustomNotification" to data.getBoolean(EXTRA_CALLKIT_IS_CUSTOM_NOTIFICATION, false),
+                "isCustomSmallExNotification" to data.getBoolean(
+                        EXTRA_CALLKIT_IS_CUSTOM_SMALL_EX_NOTIFICATION,
+                        false
+                ),
+                "ringtonePath" to data.getString(EXTRA_CALLKIT_RINGTONE_PATH, ""),
+                "backgroundColor" to data.getString(EXTRA_CALLKIT_BACKGROUND_COLOR, ""),
+                "backgroundUrl" to data.getString(EXTRA_CALLKIT_BACKGROUND_URL, ""),
+                "actionColor" to data.getString(EXTRA_CALLKIT_ACTION_COLOR, ""),
+                "incomingCallNotificationChannelName" to data.getString(
+                        EXTRA_CALLKIT_INCOMING_CALL_NOTIFICATION_CHANNEL_NAME,
+                        ""
+                ),
+                "missedCallNotificationChannelName" to data.getString(
+                        EXTRA_CALLKIT_MISSED_CALL_NOTIFICATION_CHANNEL_NAME,
+                        ""
+                ),
         )
         val forwardData = mapOf(
                 "id" to data.getString(EXTRA_CALLKIT_ID, ""),
