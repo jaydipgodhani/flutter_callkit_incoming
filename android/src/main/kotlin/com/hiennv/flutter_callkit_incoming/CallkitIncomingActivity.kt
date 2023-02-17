@@ -261,7 +261,7 @@ class CallkitIncomingActivity : Activity() {
             onAcceptClick()
         }
         ivDeclineCall.setOnClickListener {
-            onDeclineClick()
+
         }
     }
 
