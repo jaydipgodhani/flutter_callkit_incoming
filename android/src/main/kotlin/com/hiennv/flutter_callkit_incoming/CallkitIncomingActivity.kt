@@ -46,6 +46,7 @@ import android.text.TextUtils
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_TEXT_ACCEPT
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_TEXT_DECLINE
 import androidx.core.content.ContextCompat
+import android.app.AlarmManager
 
 
 class CallkitIncomingActivity : Activity() {
@@ -307,7 +308,7 @@ class CallkitIncomingActivity : Activity() {
         alarmManager.cancel(pendingIntent)*/
 
         //val alarmManager = ContextCompat.getSystemService(applicationContext, AlarmManager::class.java)
-        val pm = applicationContext.getSystemService(ALARM_SERVICE) as AlarmManager
+        val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val data = intent.extras?.getBundle(EXTRA_CALLKIT_INCOMING_DATA)
         val intent =
