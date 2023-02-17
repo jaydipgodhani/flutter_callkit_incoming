@@ -119,11 +119,11 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     if (callkitNotificationManager.incomingChannelEnabled()) {
                         if (callkitNotificationManager.incomingChannelEnabled()) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                                val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
+                                /*val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
                                 val data = androidx.work.Data.Builder()
                                 data.putString("file_path", data)
                                 compressionWork.setInputData(data.build())
-                                WorkManager.getInstance().enqueue(compressionWork.build())
+                                WorkManager.getInstance().enqueue(compressionWork.build())*/
 
                             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 val soundPlayerServiceIntent =
