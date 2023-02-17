@@ -15,7 +15,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import android.util.Log
 
-class UserDataUploadWorker(private val context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
+class UserDataUploadWorker(val context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
     private var vibrator: Vibrator? = null
     private var audioManager: AudioManager? = null
 
