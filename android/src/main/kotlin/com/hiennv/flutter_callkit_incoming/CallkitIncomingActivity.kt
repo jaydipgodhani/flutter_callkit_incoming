@@ -313,7 +313,7 @@ class CallkitIncomingActivity : Activity() {
         val soundPlayerServiceIntent =
                 Intent(applicationContext, CallkitSoundPlayerService::class.java)
         Log.d("CALLKIT", "fetchDogResponse: 2")
-        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(applicationContext, 123, soundPlayerServiceIntent, 0)
+        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(applicationContext, 123, soundPlayerServiceIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         Log.d("CALLKIT", "fetchDogResponse: 3")
         val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         Log.d("CALLKIT", "fetchDogResponse: 4")
