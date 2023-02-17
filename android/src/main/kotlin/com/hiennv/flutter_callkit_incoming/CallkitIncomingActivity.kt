@@ -300,11 +300,17 @@ class CallkitIncomingActivity : Activity() {
     }
 
     private fun onDeclineClick() {
-        val soundPlayerServiceIntent =
+       /* val soundPlayerServiceIntent =
                 Intent(applicationContext, CallkitSoundPlayerService::class.java)
         val pendingIntent: PendingIntent = PendingIntent.getBroadcast(applicationContext, 123, soundPlayerServiceIntent, 0)
         val alarmManager = ContextCompat.getSystemService(applicationContext, AlarmManager::class.java)
-        alarmManager.cancel(pendingIntent)
+        alarmManager.cancel(pendingIntent)*/
+
+        val soundPlayerServiceIntent =
+                Intent(applicationContext, CallkitSoundPlayerService::class.java)
+        val am = getSystemService (applicationContext.ALARM_SERVICE) as AlarmManager
+        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(applicationContext, 123, soundPlayerServiceIntent, 0)
+        am.cancel (pendingIntent)
 
 
         val data = intent.extras?.getBundle(EXTRA_CALLKIT_INCOMING_DATA)
