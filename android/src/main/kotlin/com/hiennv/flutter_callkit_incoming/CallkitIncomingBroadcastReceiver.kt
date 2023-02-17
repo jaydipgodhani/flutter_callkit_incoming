@@ -136,33 +136,6 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                                 soundPlayerServiceIntent.putExtras(data)
                                 context.startService(soundPlayerServiceIntent)
                             }
-
-                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            val alarmManager = ContextCompat.getSystemService(context, AlarmManager::class.java)
-                            if (alarmManager?.canScheduleExactAlarms() == true) {
-                                alarmManager.setExactAndAllowWhileIdle(
-                                        AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                                        SystemClock.elapsedRealtime() /*+ GO_OFF_OFFSET*/,
-                                        PendingIntent.getForegroundService(
-                                                context,
-                                                123,
-                                                soundPlayerServiceIntent,
-                                                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-                                        )
-                                )
-                            } else {
-
-                            }
-                        } else {
-                            ContextCompat.startForegroundService(context, soundPlayerServiceIntent)
-                        }*/
-
-                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            context.startForegroundService(soundPlayerServiceIntent)
-                        } else {
-                            //context.startService(intent)
-                            context.startService(soundPlayerServiceIntent)
-                        }*/
                     }
                 } catch (error: Exception) {
                     error.printStackTrace()
