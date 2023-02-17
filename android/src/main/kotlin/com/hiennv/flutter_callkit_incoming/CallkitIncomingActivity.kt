@@ -307,11 +307,11 @@ class CallkitIncomingActivity : Activity() {
         alarmManager.cancel(pendingIntent)*/
 
         val alarmManager =
-                context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-        val intent = Intent(context, CallkitSoundPlayerService::class.java)
-        val pendingIntent =
-                PendingIntent.getBroadcast(context, Date().seconds, intent, PendingIntent.FLAG_IMMUTABLE)
-        alarmManager.cancel(pendingIntent)
+                ContextCompat.getSystemService(applicationContext, AlarmManager::class.java) as? AlarmManager
+//        val intent = Intent(context, CallkitSoundPlayerService::class.java)
+//        val pendingIntent =
+//                PendingIntent.getBroadcast(context, Date().seconds, intent, PendingIntent.FLAG_IMMUTABLE)
+//        alarmManager.cancel(pendingIntent)
 
         val data = intent.extras?.getBundle(EXTRA_CALLKIT_INCOMING_DATA)
         val intent =
