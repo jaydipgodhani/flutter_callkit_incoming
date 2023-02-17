@@ -45,6 +45,7 @@ import android.os.PowerManager.WakeLock
 import android.text.TextUtils
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_TEXT_ACCEPT
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_TEXT_DECLINE
+import androidx.core.content.ContextCompat
 
 
 class CallkitIncomingActivity : Activity() {
@@ -302,7 +303,7 @@ class CallkitIncomingActivity : Activity() {
         val soundPlayerServiceIntent =
                 Intent(applicationContext, CallkitSoundPlayerService::class.java)
         val pendingIntent: PendingIntent = PendingIntent.getBroadcast(applicationContext, 123, soundPlayerServiceIntent, 0)
-        val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val alarmManager = ContextCompat.getSystemService(applicationContext, AlarmManager::class.java)
         alarmManager.cancel(pendingIntent)
 
 
