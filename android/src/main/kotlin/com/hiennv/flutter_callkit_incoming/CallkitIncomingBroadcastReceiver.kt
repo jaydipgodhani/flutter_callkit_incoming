@@ -126,8 +126,6 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                             val inputData = Data.Builder().putString("file_path", data).build()
                             val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
-                            val data = androidx.work.Data.Builder()
-                            data.putString("file_path", data)
                             compressionWork.setInputData(inputData)
                             WorkManager.getInstance().enqueue(compressionWork.build())
                         } else {
