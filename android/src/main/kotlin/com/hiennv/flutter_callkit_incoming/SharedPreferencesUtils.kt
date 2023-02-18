@@ -18,7 +18,7 @@ private fun initInstance(context: Context) {
 fun addCall(context: Context?, data: DataCall, isAccepted: Boolean = false) {
     val json = getString(context, "ACTIVE_CALLS", "[]")
     val arrayData: ArrayList<DataCall> = Utils.getGsonInstance()
-        .fromJson(json, object : TypeToken<ArrayList<Data>>() {}.type)
+        .fromJson(json, object : TypeToken<ArrayList<DataCall>>() {}.type)
     val currentData = arrayData.find { it == data }
     if(currentData != null) {
         currentData.isAccepted = isAccepted
@@ -31,7 +31,7 @@ fun addCall(context: Context?, data: DataCall, isAccepted: Boolean = false) {
 fun removeCall(context: Context?, data: DataCall) {
     val json = getString(context, "ACTIVE_CALLS", "[]")
     val arrayData: ArrayList<DataCall> = Utils.getGsonInstance()
-        .fromJson(json, object : TypeToken<ArrayList<Data>>() {}.type)
+        .fromJson(json, object : TypeToken<ArrayList<DataCall>>() {}.type)
     arrayData.remove(data)
     putString(context, "ACTIVE_CALLS", Utils.getGsonInstance().toJson(arrayData))
 }
@@ -44,7 +44,7 @@ fun removeAllCalls(context: Context?) {
 fun getActiveCalls(context: Context?): String {
     val json = getString(context, "ACTIVE_CALLS", "[]")
     val arrayData: ArrayList<DataCall> = Utils.getGsonInstance()
-        .fromJson(json, object : TypeToken<ArrayList<Data>>() {}.type)
+        .fromJson(json, object : TypeToken<ArrayList<DataCall>>() {}.type)
     return Utils.getGsonInstance().toJson(arrayData)
 }
 
