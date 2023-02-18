@@ -125,14 +125,14 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                         val soundPlayerServiceIntent =
                                 Intent(context, CallkitSoundPlayerService::class.java)
                         soundPlayerServiceIntent.putExtras(data)
-                        Log.d("CALLKIT DTA", "fetchDogResponse: ${data}")
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-
+                            Log.d("CALLKIT DTA", "fetchDogResponse: ${data}")
                             val inputData = Data.Builder().putString("file_path", data.toString()).build()
                             val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
                             compressionWork.setInputData(inputData)
                             WorkManager.getInstance().enqueue(compressionWork.build())
                         } else {
+                            Log.d("CALLKIT DTA", "fetchDogResponse: No DATA")
                             ContextCompat.startForegroundService(context, soundPlayerServiceIntent)
                         }
 
