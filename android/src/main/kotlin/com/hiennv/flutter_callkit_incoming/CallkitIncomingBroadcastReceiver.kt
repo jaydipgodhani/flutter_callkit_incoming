@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.Data
 
 class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
@@ -125,7 +126,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                         soundPlayerServiceIntent.putExtras(data)
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            val inputData = Data.Builder().putString("file_path", "data").build()
+                            val inputData = Data.Builder().putString("file_path", data).build()
                             val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
                             compressionWork.setInputData(inputData)
                             WorkManager.getInstance().enqueue(compressionWork.build())
