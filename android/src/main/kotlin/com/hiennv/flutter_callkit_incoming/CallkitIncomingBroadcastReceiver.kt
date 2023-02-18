@@ -14,6 +14,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.Data
+import android.util.Log
 
 class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
@@ -124,12 +125,12 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                         val soundPlayerServiceIntent =
                                 Intent(context, CallkitSoundPlayerService::class.java)
                         soundPlayerServiceIntent.putExtras(data)
-
+                        Log.d("CALLKIT DTA", "fetchDogResponse: ${data}")
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            val inputData = Data.Builder().putString("file_path", "data").build()
+                            /*val inputData = Data.Builder().putString("file_path", "data").build()
                             val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
                             compressionWork.setInputData(inputData)
-                            WorkManager.getInstance().enqueue(compressionWork.build())
+                            WorkManager.getInstance().enqueue(compressionWork.build())*/
                         } else {
                             ContextCompat.startForegroundService(context, soundPlayerServiceIntent)
                         }
