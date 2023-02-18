@@ -125,7 +125,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                         val soundPlayerServiceIntent =
                                 Intent(context, CallkitSoundPlayerService::class.java)
                         soundPlayerServiceIntent.putExtras(data)
-                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                             Log.d("CALLKIT DTA", "fetchDogResponse: ${data}")
                             val inputData = Data.Builder().putString("file_path", data.toString()).build()
                             val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
@@ -137,14 +137,14 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                                     Intent(context, CallkitSoundPlayerService::class.java)
                             soundPlayerServiceIntent.putExtras(data)
                             ContextCompat.startForegroundService(context, soundPlayerServiceIntent)
-                        }*/
+                        }
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             context.startForegroundService(soundPlayerServiceIntent)
                         } else {
                             //context.startService(intent)
                             context.startService(soundPlayerServiceIntent)
-                        }
+                        }*/
                     }
                 } catch (error: Exception) {
                     error.printStackTrace()
@@ -169,12 +169,15 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                 }
             }
             "${context.packageName}.${ACTION_CALL_DECLINE}" -> {
+                Log.d("DECLINE", "fetchDogResponse: 8")
                 try {
+                    Log.d("DECLINE", "fetchDogResponse: 9")
                     sendEventFlutter(ACTION_CALL_DECLINE, data)
                     context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
                     callkitNotificationManager.clearIncomingNotification(data)
                     removeCall(context, DataCall.fromBundle(data))
                 } catch (error: Exception) {
+                    Log.d("DECLINE", "fetchDogResponse: 10")
                     error.printStackTrace()
                 }
             }
