@@ -6,7 +6,7 @@ class Call {
 }
 
 @Suppress("UNCHECKED_CAST")
-data class Data(val args: Map<String, Any?>) {
+data class DataCall(val args: Map<String, Any?>) {
 
     var id: String = (args["id"] as? String) ?: ""
     var uuid: String = (args["id"] as? String) ?: ""
@@ -74,7 +74,7 @@ data class Data(val args: Map<String, Any?>) {
 
     override fun equals(other: Any?): Boolean {
         if (other == null) return false
-        val e: Data = other as Data
+        val e: DataCall = other as DataCall
         return this.id == e.id
     }
 
@@ -137,8 +137,8 @@ data class Data(val args: Map<String, Any?>) {
 
     companion object {
 
-        fun fromBundle(bundle: Bundle): Data {
-            val data = Data(emptyMap())
+        fun fromBundle(bundle: Bundle): DataCall {
+            val data = DataCall(emptyMap())
             data.id = bundle.getString(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_ID, "")
             data.nameCaller =
                     bundle.getString(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_NAME_CALLER, "")

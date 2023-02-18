@@ -119,7 +119,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                 try {
                     callkitNotificationManager.showIncomingNotification(data)
                     sendEventFlutter(ACTION_CALL_INCOMING, data)
-                    addCall(context, Data.fromBundle(data))
+                    addCall(context, DataCall.fromBundle(data))
 
                     if (callkitNotificationManager.incomingChannelEnabled()) {
                         val soundPlayerServiceIntent =
@@ -149,7 +149,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
             "${context.packageName}.${ACTION_CALL_START}" -> {
                 try {
                     sendEventFlutter(ACTION_CALL_START, data)
-                    addCall(context, Data.fromBundle(data), true)
+                    addCall(context, DataCall.fromBundle(data), true)
                 } catch (error: Exception) {
                     error.printStackTrace()
                 }
@@ -159,7 +159,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     sendEventFlutter(ACTION_CALL_ACCEPT, data)
                     context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
                     callkitNotificationManager.clearIncomingNotification(data)
-                    addCall(context, Data.fromBundle(data), true)
+                    addCall(context, DataCall.fromBundle(data), true)
                 } catch (error: Exception) {
                     error.printStackTrace()
                 }
@@ -169,7 +169,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     sendEventFlutter(ACTION_CALL_DECLINE, data)
                     context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
                     callkitNotificationManager.clearIncomingNotification(data)
-                    removeCall(context, Data.fromBundle(data))
+                    removeCall(context, DataCall.fromBundle(data))
                 } catch (error: Exception) {
                     error.printStackTrace()
                 }
@@ -179,7 +179,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     sendEventFlutter(ACTION_CALL_ENDED, data)
                     context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
                     callkitNotificationManager.clearIncomingNotification(data)
-                    removeCall(context, Data.fromBundle(data))
+                    removeCall(context, DataCall.fromBundle(data))
                 } catch (error: Exception) {
                     error.printStackTrace()
                 }
@@ -191,7 +191,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     if (data.getBoolean(EXTRA_CALLKIT_IS_SHOW_MISSED_CALL_NOTIFICATION, true)) {
                         callkitNotificationManager.showMissCallNotification(data)
                     }
-                    removeCall(context, Data.fromBundle(data))
+                    removeCall(context, DataCall.fromBundle(data))
                 } catch (error: Exception) {
                     error.printStackTrace()
                 }
