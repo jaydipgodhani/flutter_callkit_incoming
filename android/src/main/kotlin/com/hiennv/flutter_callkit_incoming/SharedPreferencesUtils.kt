@@ -15,9 +15,9 @@ private fun initInstance(context: Context) {
 }
 
 
-fun addCall(context: Context?, data: Data, isAccepted: Boolean = false) {
+fun addCall(context: Context?, data: DataCall, isAccepted: Boolean = false) {
     val json = getString(context, "ACTIVE_CALLS", "[]")
-    val arrayData: ArrayList<Data> = Utils.getGsonInstance()
+    val arrayData: ArrayList<DataCall> = Utils.getGsonInstance()
         .fromJson(json, object : TypeToken<ArrayList<Data>>() {}.type)
     val currentData = arrayData.find { it == data }
     if(currentData != null) {
@@ -28,9 +28,9 @@ fun addCall(context: Context?, data: Data, isAccepted: Boolean = false) {
     putString(context, "ACTIVE_CALLS", Utils.getGsonInstance().toJson(arrayData))
 }
 
-fun removeCall(context: Context?, data: Data) {
+fun removeCall(context: Context?, data: DataCall) {
     val json = getString(context, "ACTIVE_CALLS", "[]")
-    val arrayData: ArrayList<Data> = Utils.getGsonInstance()
+    val arrayData: ArrayList<DataCall> = Utils.getGsonInstance()
         .fromJson(json, object : TypeToken<ArrayList<Data>>() {}.type)
     arrayData.remove(data)
     putString(context, "ACTIVE_CALLS", Utils.getGsonInstance().toJson(arrayData))
@@ -43,15 +43,15 @@ fun removeAllCalls(context: Context?) {
 
 fun getActiveCalls(context: Context?): String {
     val json = getString(context, "ACTIVE_CALLS", "[]")
-    val arrayData: ArrayList<Data> = Utils.getGsonInstance()
+    val arrayData: ArrayList<DataCall> = Utils.getGsonInstance()
         .fromJson(json, object : TypeToken<ArrayList<Data>>() {}.type)
     return Utils.getGsonInstance().toJson(arrayData)
 }
 
-fun getDataActiveCalls(context: Context?): ArrayList<Data> {
+fun getDataActiveCalls(context: Context?): ArrayList<DataCall> {
     val json = getString(context, "ACTIVE_CALLS", "[]")
     return Utils.getGsonInstance()
-        .fromJson(json, object : TypeToken<ArrayList<Data>>() {}.type)
+        .fromJson(json, object : TypeToken<ArrayList<DataCall>>() {}.type)
 }
 
 fun getDataActiveCallsForFlutter(context: Context?): ArrayList<Map<String, Any?>> {

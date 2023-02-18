@@ -86,7 +86,7 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
         sharePluginWithRegister(flutterPluginBinding, this)
     }
 
-    public fun showIncomingNotification(data: Data) {
+    public fun showIncomingNotification(data: DataCall) {
         data.from = "notification"
         callkitNotificationManager?.showIncomingNotification(data.toBundle())
         //send BroadcastReceiver
@@ -98,11 +98,11 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
         )
     }
 
-    public fun showMissCallNotification(data: Data) {
+    public fun showMissCallNotification(data: DataCall) {
         callkitNotificationManager?.showIncomingNotification(data.toBundle())
     }
 
-    public fun startCall(data: Data) {
+    public fun startCall(data: DataCall) {
         context?.sendBroadcast(
             CallkitIncomingBroadcastReceiver.getIntentStart(
                 requireNotNull(context),
@@ -111,7 +111,7 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
         )
     }
 
-    public fun endCall(data: Data) {
+    public fun endCall(data: DataCall) {
         context?.sendBroadcast(
             CallkitIncomingBroadcastReceiver.getIntentEnded(
                 requireNotNull(context),
@@ -141,7 +141,7 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
         try {
             when (call.method) {
                 "showCallkitIncoming" -> {
-                    val data = Data(call.arguments() ?: HashMap<String, Any?>())
+                    val data = DataCall(call.arguments() ?: HashMap<String, Any?>())
                     data.from = "notification"
                     //send BroadcastReceiver
                     context?.sendBroadcast(
@@ -153,13 +153,13 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                     result.success("OK")
                 }
                 "showMissCallNotification" -> {
-                    val data = Data(call.arguments() ?: HashMap<String, Any?>())
+                    val data = DataCall(call.arguments() ?: HashMap<String, Any?>())
                     data.from = "notification"
                     callkitNotificationManager?.showMissCallNotification(data.toBundle())
                     result.success("OK")
                 }
                 "startCall" -> {
-                    val data = Data(call.arguments() ?: HashMap<String, Any?>())
+                    val data = DataCall(call.arguments() ?: HashMap<String, Any?>())
                     context?.sendBroadcast(
                         CallkitIncomingBroadcastReceiver.getIntentStart(
                             requireNotNull(context),
@@ -169,7 +169,7 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                     result.success("OK")
                 }
                 "endCall" -> {
-                    val data = Data(call.arguments() ?: HashMap<String, Any?>())
+                    val data = DataCall(call.arguments() ?: HashMap<String, Any?>())
                     context?.sendBroadcast(
                         CallkitIncomingBroadcastReceiver.getIntentEnded(
                             requireNotNull(context),
