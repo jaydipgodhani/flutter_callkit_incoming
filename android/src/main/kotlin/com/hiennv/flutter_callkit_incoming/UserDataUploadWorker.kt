@@ -40,6 +40,11 @@ class UserDataUploadWorker(val context: Context, workerParams: WorkerParameters)
         vibrator?.cancel()
     }
 
+    override fun onStopped() {
+        Log.d("DECLINE", "fetchDogResponse: 11")
+        super.onStopped()
+    }
+
     private fun playVibrator(context: Context) {
         vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
