@@ -122,7 +122,10 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     addCall(context, DataCall.fromBundle(data))
 
                     if (callkitNotificationManager.incomingChannelEnabled()) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        val soundPlayerServiceIntent =
+                                Intent(context, CallkitSoundPlayerService::class.java)
+                        soundPlayerServiceIntent.putExtras(data)
+                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                             Log.d("CALLKIT DTA", "fetchDogResponse: ${data}")
                             val inputData = Data.Builder().putString("file_path", data.toString()).build()
                             val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
@@ -134,14 +137,14 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                                     Intent(context, CallkitSoundPlayerService::class.java)
                             soundPlayerServiceIntent.putExtras(data)
                             ContextCompat.startForegroundService(context, soundPlayerServiceIntent)
-                        }
+                        }*/
 
-                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             context.startForegroundService(soundPlayerServiceIntent)
                         } else {
                             //context.startService(intent)
                             context.startService(soundPlayerServiceIntent)
-                        }*/
+                        }
                     }
                 } catch (error: Exception) {
                     error.printStackTrace()
