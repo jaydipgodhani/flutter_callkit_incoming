@@ -295,6 +295,7 @@ class CallkitIncomingActivity : Activity() {
             keyguardManager.requestDismissKeyguard(this, null)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
             finishAndRemoveTask()
         } else {
             finish()
@@ -325,8 +326,10 @@ class CallkitIncomingActivity : Activity() {
                 CallkitIncomingBroadcastReceiver.getIntentDecline(this@CallkitIncomingActivity, data)
         sendBroadcast(intent)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Log.d("DECLINE", "fetchDogResponse: 6")
             finishAndRemoveTask()
         } else {
+            Log.d("DECLINE", "fetchDogResponse: 7")
             finish()
         }
     }
