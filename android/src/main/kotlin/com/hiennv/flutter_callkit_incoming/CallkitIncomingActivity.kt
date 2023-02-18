@@ -295,7 +295,6 @@ class CallkitIncomingActivity : Activity() {
             keyguardManager.requestDismissKeyguard(this, null)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
             finishAndRemoveTask()
         } else {
             finish()
@@ -303,24 +302,6 @@ class CallkitIncomingActivity : Activity() {
     }
 
     private fun onDeclineClick() {
-        /*val soundPlayerServiceIntent =
-                Intent(applicationContext, CallkitSoundPlayerService::class.java)
-        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(applicationContext, 123, soundPlayerServiceIntent, 0)
-        val alarmManager = ContextCompat.getSystemService(applicationContext, AlarmManager::class.java)
-        alarmManager.cancel(pendingIntent)*/
-
-        //val alarmManager = ContextCompat.getSystemService(applicationContext, AlarmManager::class.java)
-        Log.d("DECLINE", "fetchDogResponse: 1")
-        val soundPlayerServiceIntent =
-                Intent(applicationContext, CallkitSoundPlayerService::class.java)
-        Log.d("DECLINE", "fetchDogResponse: 2")
-        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(applicationContext, 123, soundPlayerServiceIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-        Log.d("DECLINE", "fetchDogResponse: 3")
-        val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        Log.d("DECLINE", "fetchDogResponse: 4")
-        alarmManager.cancel(pendingIntent)
-        Log.d("DECLINE", "fetchDogResponse: 5")
-
         val data = intent.extras?.getBundle(EXTRA_CALLKIT_INCOMING_DATA)
         val intent =
                 CallkitIncomingBroadcastReceiver.getIntentDecline(this@CallkitIncomingActivity, data)
