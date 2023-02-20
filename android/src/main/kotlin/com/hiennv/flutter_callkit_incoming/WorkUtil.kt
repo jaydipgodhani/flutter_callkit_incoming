@@ -11,15 +11,19 @@ class WorkUtil private constructor() {
 
     companion object {
         lateinit var mWorkManager : WorkManager
-        private var workUtil: WorkUtil? = null
-        val instance: WorkUtil?
-            get() {
-                if (workUtil == null) {
-                    workUtil = WorkUtil()
+
+        @Volatile
+        private lateinit var instance: WorkUtil
+
+        fun getInstance(): WorkUtil {
+            synchronized(this) {
+                if (!::instance.isInitialized) {
+                    instance = WorkUtil()
                     mWorkManager= WorkManager.getInstance()
                 }
-                return workUtil
+                return instance
             }
+        }
     }
     fun startSyncing(data:Data) {
         val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
