@@ -37,12 +37,12 @@ class DAMusicPlayer private constructor() {
 
     fun startMusicPlayer(filePath: String, context: Context, applicationContext: Context) {
         Log.d("Callkit", "fetchDogResponse: $filePath")
-        this.prepare(context)
+        //this.prepare()
         this.playSound(filePath, context, applicationContext)
         this.playVibrator(context)
     }
 
-    private fun prepare(context: Context) {
+    private fun prepare() {
         mediaPlayer?.stop()
         mediaPlayer?.release()
         vibrator?.cancel()
