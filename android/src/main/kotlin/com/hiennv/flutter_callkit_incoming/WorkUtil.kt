@@ -11,7 +11,6 @@ class WorkUtil private constructor() {
 
     companion object {
         lateinit var mWorkManager : WorkManager
-        var compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
 
         @Volatile
         private lateinit var instance: WorkUtil
@@ -27,12 +26,13 @@ class WorkUtil private constructor() {
         }
     }
     fun startSyncing(data:Data) {
-        compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
+        var compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java).addTag("RWORK_TAG_NOTES")
         compressionWork.setInputData(data)
-        mWorkManager.enqueue(compressionWork.build())
+        mWorkManager.enqueueUniqueWork("RWORK_TAG_NOTES", ExistingWorkPolicy.REPLACE, compressionWork.build())
     }
     fun cancelAllWork() {
         Log.d("DECLINE", "fetchDogResponse: 11")
-        mWorkManager.cancelAllWork()
+        /*mWorkManager.cancelAllWork()*/
+        mWorkManagercancelAllWorkByTag("RWORK_TAG_NOTES")
     }
 }
