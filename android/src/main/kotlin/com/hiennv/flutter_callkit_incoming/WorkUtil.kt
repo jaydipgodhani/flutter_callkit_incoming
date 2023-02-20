@@ -20,13 +20,13 @@ class WorkUtil private constructor() {
                 }
                 return workUtil
             }
-        fun startSyncing(data:Data) {
-            val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
-            compressionWork.setInputData(data)
-            mWorkManager.enqueue(compressionWork.build())
-        }
-        fun cancelAllWork() {
-            mWorkManager.cancelAllWork()
-        }
+    }
+    fun startSyncing(data:Data) {
+        val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
+        compressionWork.setInputData(data)
+        mWorkManager.enqueue(compressionWork.build())
+    }
+    fun cancelAllWork() {
+        mWorkManager.cancelAllWork()
     }
 }
