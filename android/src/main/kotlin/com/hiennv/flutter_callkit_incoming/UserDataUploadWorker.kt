@@ -41,8 +41,15 @@ class UserDataUploadWorker(val context: Context, workerParams: WorkerParameters)
     }
 
     override fun onStopped() {
-        Log.d("DECLINE", "fetchDogResponse: 11")
+        Log.d("DECLINE", "fetchDogResponse: 12")
         super.onStopped()
+    }
+
+    fun stopAllPlayer() {
+        Log.d("DECLINE", "fetchDogResponse: 13")
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        vibrator?.cancel()
     }
 
     private fun playVibrator(context: Context) {

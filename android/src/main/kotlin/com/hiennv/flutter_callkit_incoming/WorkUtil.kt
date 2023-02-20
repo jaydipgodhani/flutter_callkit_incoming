@@ -11,6 +11,7 @@ class WorkUtil private constructor() {
 
     companion object {
         lateinit var mWorkManager : WorkManager
+        var compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
 
         @Volatile
         private lateinit var instance: WorkUtil
@@ -26,11 +27,13 @@ class WorkUtil private constructor() {
         }
     }
     fun startSyncing(data:Data) {
-        val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
+        compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
         compressionWork.setInputData(data)
         mWorkManager.enqueue(compressionWork.build())
     }
     fun cancelAllWork() {
+        Log.d("DECLINE", "fetchDogResponse: 11")
+        compressionWork.stopAllPlayer()
         mWorkManager.cancelAllWork()
     }
 }
