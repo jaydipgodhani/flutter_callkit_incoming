@@ -175,7 +175,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                 try {
                     Log.d("DECLINE", "fetchDogResponse: 9")
                     sendEventFlutter(ACTION_CALL_DECLINE, data)
-                    WorkUtil.instance.cancelAllWork()
+                    WorkUtil?.instance.cancelAllWork()
                     context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
                     callkitNotificationManager.clearIncomingNotification(data)
                     removeCall(context, DataCall.fromBundle(data))
