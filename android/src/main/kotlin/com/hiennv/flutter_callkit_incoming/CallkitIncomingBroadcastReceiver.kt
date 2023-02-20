@@ -132,7 +132,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                             compressionWork.setInputData(inputData)
                             WorkManager.getInstance().enqueue(compressionWork.build())*
                              */
-                            WorkUtil.getInstance().startSyncing(inputData)
+                            WorkUtil.instance.startSyncing(inputData)
                         } else {
                             Log.d("CALLKIT DTA", "fetchDogResponse: No DATA")
                             val soundPlayerServiceIntent =
@@ -175,7 +175,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                 try {
                     Log.d("DECLINE", "fetchDogResponse: 9")
                     sendEventFlutter(ACTION_CALL_DECLINE, data)
-                    WorkUtil.getInstance().cancelAllWork()
+                    WorkUtil.instance.cancelAllWork()
                     context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
                     callkitNotificationManager.clearIncomingNotification(data)
                     removeCall(context, DataCall.fromBundle(data))

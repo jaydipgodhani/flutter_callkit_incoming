@@ -9,30 +9,24 @@ import androidx.work.Data
 
 class WorkUtil private constructor() {
 
-    init {
-        mWorkManager = WorkManager.getInstance()
-    }
     companion object {
-        @Volatile
-        private lateinit var instance: WorkUtil
-
-        fun getInstance(): WorkUtil {
-            synchronized(this) {
-                if (!::instance.isInitialized) {
-                    instance = WorkUtil()
+        lateinit var mWorkManager : WorkManager
+        private var workUtil: WorkUtil? = null
+        val instance: WorkUtil?
+            get() {
+                if (workUtil == null) {
+                    workUtil = WorkUtil()
+                    mWorkManager= WorkManager.getInstance()
                 }
-                return instance
+                return workUtil
             }
+        fun startSyncing(data:Data) {
+            val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
+            compressionWork.setInputData(data)
+            mWorkManager.enqueue(compressionWork.build())
         }
-    }
-    fun startSyncing(data:Data) {
-        val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
-        compressionWork.setInputData(data)
-        mWorkManager.enqueue(compressionWork.build())
-    }
-
-    fun cancelAllWork() {
-        Log.d("DECLINE", "fetchDogResponse: 11")
-        mWorkManager.cancelAllWork()
+        fun cancelAllWork() {
+            mWorkManager.cancelAllWork()
+        }
     }
 }
