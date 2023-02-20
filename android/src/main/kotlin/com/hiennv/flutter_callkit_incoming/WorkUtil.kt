@@ -12,26 +12,25 @@ class WorkUtil private constructor() {
         mWorkManager = WorkManager.getInstance()
     }
 
-    companion object {
-        private lateinit var mWorkManager: WorkManager
-        var workUtil: WorkUtil? = null
-        val instance: WorkUtil?
-            get() {
-                if (workUtil == null) {
-                    workUtil = WorkUtil()
-                }
-                return workUtil
+    private lateinit var mWorkManager: WorkManager
+    var workUtil: WorkUtil? = null
+    val instance: WorkUtil?
+        get() {
+            if (workUtil == null) {
+                workUtil = WorkUtil()
             }
-
-        fun startSyncing(data:Data) {
-            val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
-            compressionWork.setInputData(data)
-            mWorkManager.enqueue(compressionWork.build())
+            return workUtil
         }
 
-        fun cancelAllWork() {
-            Log.d("DECLINE", "fetchDogResponse: 11")
-            mWorkManager.cancelAllWork()
-        }
+    fun startSyncing(data:Data) {
+        val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
+        compressionWork.setInputData(data)
+        mWorkManager.enqueue(compressionWork.build())
     }
+
+    fun cancelAllWork() {
+        Log.d("DECLINE", "fetchDogResponse: 11")
+        mWorkManager.cancelAllWork()
+    }
+
 }
