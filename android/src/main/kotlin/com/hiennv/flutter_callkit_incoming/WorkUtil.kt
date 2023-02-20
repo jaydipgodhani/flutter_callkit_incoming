@@ -24,17 +24,15 @@ class WorkUtil private constructor() {
                 return instance
             }
         }
+    }
+    fun startSyncing(data:Data) {
+        val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
+        compressionWork.setInputData(data)
+        mWorkManager.enqueue(compressionWork.build())
+    }
 
-        fun startSyncing(data:Data) {
-            val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
-            compressionWork.setInputData(data)
-            mWorkManager.enqueue(compressionWork.build())
-        }
-
-        fun cancelAllWork() {
-            Log.d("DECLINE", "fetchDogResponse: 11")
-            mWorkManager.cancelAllWork()
-        }
-
+    fun cancelAllWork() {
+        Log.d("DECLINE", "fetchDogResponse: 11")
+        mWorkManager.cancelAllWork()
     }
 }
