@@ -33,7 +33,6 @@ class WorkUtil private constructor() {
     }
     fun cancelAllWork() {
         Log.d("DECLINE", "fetchDogResponse: 11")
-        compressionWork.stopAllPlayer()
         mWorkManager.cancelAllWork()
     }
 }
