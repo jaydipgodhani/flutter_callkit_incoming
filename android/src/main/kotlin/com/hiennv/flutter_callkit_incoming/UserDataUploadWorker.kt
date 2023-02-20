@@ -23,14 +23,33 @@ class UserDataUploadWorker(val context: Context, workerParams: WorkerParameters)
     private var mediaPlayer: MediaPlayer? = null
     private var data: Bundle? = null
 
-    @NonNull
-    fun startWork(): ListenableFuture<Result?>? {
-        getBackgroundExecutor().execute(object : java.lang.Runnable() {
-            fun run() {
-                uploadUserData(context)
+
+    override fun startWork(): ListenableFuture<Result> {
+        return CallbackToFutureAdapter.getFuture { completer ->
+            val callback = object : Callback {
+                var successes = 0
+
+                override fun onFailure(call: Call, e: IOException) {
+                    completer.setException(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    ++successes
+                    if (successes == 100) {
+                        uploadUserData(context)
+                        completer.set(Result.success())
+                    }
+                }
             }
-        })
-        return mFuture
+
+            /*completer.addCancellationListener(cancelDownloadsRunnable, executor)
+
+            repeat(100) {
+                downloadAsynchronously("https://example.com", callback)
+            }*/
+
+            callback
+        }
     }
 
     private fun uploadUserData(context: Context) {
