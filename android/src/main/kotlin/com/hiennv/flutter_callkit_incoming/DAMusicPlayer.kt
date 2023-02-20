@@ -47,6 +47,11 @@ class DAMusicPlayer private constructor() {
         mediaPlayer?.release()
         vibrator?.cancel()
     }
+    fun stopAllPlayer() {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        vibrator?.cancel()
+    }
     private fun playVibrator(context: Context) {
         vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager

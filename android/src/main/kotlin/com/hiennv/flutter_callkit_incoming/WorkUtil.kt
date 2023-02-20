@@ -34,6 +34,7 @@ class WorkUtil private constructor() {
     fun cancelAllWork() {
         Log.d("DECLINE", "fetchDogResponse: 11")
         /*mWorkManager.cancelAllWork()*/
+        DAMusicPlayer.getInstance().stopAllPlayer()
         mWorkManager.cancelAllWorkByTag("RWORK_TAG_NOTES")
     }
 }
