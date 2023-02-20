@@ -6,6 +6,7 @@ import androidx.work.WorkManager
 import com.hiennv.flutter_callkit_incoming.UserDataUploadWorker
 import android.util.Log
 import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
 
 class WorkUtil private constructor() {
 
@@ -33,6 +34,6 @@ class WorkUtil private constructor() {
     fun cancelAllWork() {
         Log.d("DECLINE", "fetchDogResponse: 11")
         /*mWorkManager.cancelAllWork()*/
-        mWorkManagercancelAllWorkByTag("RWORK_TAG_NOTES")
+        mWorkManager.cancelAllWorkByTag("RWORK_TAG_NOTES")
     }
 }
