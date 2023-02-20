@@ -14,17 +14,23 @@ import android.text.TextUtils
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import android.util.Log
+import androidx.work.ListenableWorker
 
-class UserDataUploadWorker(val context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
+class UserDataUploadWorker(val context: Context, workerParams: WorkerParameters) : ListenableWorker(context, workerParams) {
     private var vibrator: Vibrator? = null
     private var audioManager: AudioManager? = null
 
     private var mediaPlayer: MediaPlayer? = null
     private var data: Bundle? = null
 
-    override fun doWork(): Result {
-        uploadUserData(context)
-        return Result.success()
+    @NonNull
+    fun startWork(): ListenableFuture<Result?>? {
+        getBackgroundExecutor().execute(object : java.lang.Runnable() {
+            fun run() {
+                uploadUserData(context)
+            }
+        })
+        return mFuture
     }
 
     private fun uploadUserData(context: Context) {
