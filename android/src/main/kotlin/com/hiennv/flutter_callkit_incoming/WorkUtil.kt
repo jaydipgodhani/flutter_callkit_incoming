@@ -14,12 +14,12 @@ class WorkUtil private constructor() {
     }
     companion object {
         @Volatile
-        private lateinit var instance: Singleton
+        private lateinit var instance: WorkUtil
 
-        fun getInstance(): Singleton {
+        fun getInstance(): WorkUtil {
             synchronized(this) {
                 if (!::instance.isInitialized) {
-                    instance = Singleton()
+                    instance = WorkUtil()
                 }
                 return instance
             }
