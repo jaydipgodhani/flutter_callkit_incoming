@@ -132,7 +132,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                             compressionWork.setInputData(inputData)
                             WorkManager.getInstance().enqueue(compressionWork.build())*
                              */
-                            WorkUtil.instance.startSyncing(inputData)
+                            WorkUtil.startSyncing(inputData)
                         } else {
                             Log.d("CALLKIT DTA", "fetchDogResponse: No DATA")
                             val soundPlayerServiceIntent =
