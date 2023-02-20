@@ -14,42 +14,17 @@ import android.text.TextUtils
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import android.util.Log
-import androidx.work.ListenableWorker
 
-class UserDataUploadWorker(val context: Context, workerParams: WorkerParameters) : ListenableWorker(context, workerParams) {
+class UserDataUploadWorker(val context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
     private var vibrator: Vibrator? = null
     private var audioManager: AudioManager? = null
 
     private var mediaPlayer: MediaPlayer? = null
     private var data: Bundle? = null
 
-
-    override fun startWork(): ListenableFuture<Result> {
-        return CallbackToFutureAdapter.getFuture { completer ->
-            val callback = object : Callback {
-                var successes = 0
-
-                override fun onFailure(call: Call, e: IOException) {
-                    completer.setException(e)
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    ++successes
-                    if (successes == 100) {
-                        uploadUserData(context)
-                        completer.set(Result.success())
-                    }
-                }
-            }
-
-            /*completer.addCancellationListener(cancelDownloadsRunnable, executor)
-
-            repeat(100) {
-                downloadAsynchronously("https://example.com", callback)
-            }*/
-
-            callback
-        }
+    override fun doWork(): Result {
+        uploadUserData(context)
+        return Result.success()
     }
 
     private fun uploadUserData(context: Context) {
