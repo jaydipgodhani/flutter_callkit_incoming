@@ -8,16 +8,22 @@ import android.util.Log
 import androidx.work.Data
 
 class WorkUtil private constructor() {
-    companion object {
+
+    init {
         mWorkManager = WorkManager.getInstance()
-        var workUtil: WorkUtil? = null
-        val instance: WorkUtil?
-            get() {
-                if (workUtil == null) {
-                    workUtil = WorkUtil()
+    }
+    companion object {
+        @Volatile
+        private lateinit var instance: Singleton
+
+        fun getInstance(): Singleton {
+            synchronized(this) {
+                if (!::instance.isInitialized) {
+                    instance = Singleton()
                 }
-                return workUtil
+                return instance
             }
+        }
 
         fun startSyncing(data:Data) {
             val compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java)
@@ -29,5 +35,6 @@ class WorkUtil private constructor() {
             Log.d("DECLINE", "fetchDogResponse: 11")
             mWorkManager.cancelAllWork()
         }
+
     }
 }
