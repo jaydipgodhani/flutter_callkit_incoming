@@ -29,7 +29,7 @@ class WorkUtil private constructor() {
     fun startSyncing(data:Data) {
         var compressionWork = OneTimeWorkRequest.Builder(UserDataUploadWorker::class.java).addTag("RWORK_TAG_NOTES")
         compressionWork.setInputData(data)
-        mWorkManager.enqueueUniqueWork("RWORK_TAG_NOTES", ExistingWorkPolicy.REPLACE, compressionWork.build())
+        mWorkManager.enqueueUniqueWork("RWORK_TAG_NOTES", ExistingWorkPolicy.KEEP, compressionWork.build())
     }
     fun cancelAllWork() {
         Log.d("DECLINE", "fetchDogResponse: 11")
