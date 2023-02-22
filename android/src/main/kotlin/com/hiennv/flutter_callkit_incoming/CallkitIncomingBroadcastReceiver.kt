@@ -122,7 +122,11 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     addCall(context, DataCall.fromBundle(data))
 
                     if (callkitNotificationManager.incomingChannelEnabled()) {
-                        val soundPlayerServiceIntent =
+
+                        val inputData = Data.Builder().putString("file_path", data.toString()).build()
+                        WorkUtil.getInstance().startSyncing(inputData)
+
+                        /*val soundPlayerServiceIntent =
                                 Intent(context, CallkitSoundPlayerService::class.java)
                         soundPlayerServiceIntent.putExtras(data)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -139,13 +143,6 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                                     Intent(context, CallkitSoundPlayerService::class.java)
                             soundPlayerServiceIntent.putExtras(data)
                             //ContextCompat.startForegroundService(context, soundPlayerServiceIntent)
-                            context.startService(soundPlayerServiceIntent)
-                        }
-
-                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            context.startForegroundService(soundPlayerServiceIntent)
-                        } else {
-                            //context.startService(intent)
                             context.startService(soundPlayerServiceIntent)
                         }*/
                     }
@@ -164,11 +161,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
             "${context.packageName}.${ACTION_CALL_ACCEPT}" -> {
                 try {
                     sendEventFlutter(ACTION_CALL_ACCEPT, data)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        WorkUtil.getInstance().cancelAllWork()
-                    } else {
-                        context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
-                    }
+                    WorkUtil.getInstance().cancelAllWork()
                     callkitNotificationManager.clearIncomingNotification(data)
                     addCall(context, DataCall.fromBundle(data), true)
                 } catch (error: Exception) {
@@ -180,11 +173,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                 try {
                     Log.d("DECLINE", "fetchDogResponse: 9")
                     sendEventFlutter(ACTION_CALL_DECLINE, data)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        WorkUtil.getInstance().cancelAllWork()
-                    } else {
-                        context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
-                    }
+                    WorkUtil.getInstance().cancelAllWork()
                     callkitNotificationManager.clearIncomingNotification(data)
                     removeCall(context, DataCall.fromBundle(data))
                 } catch (error: Exception) {
@@ -195,11 +184,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
             "${context.packageName}.${ACTION_CALL_ENDED}" -> {
                 try {
                     sendEventFlutter(ACTION_CALL_ENDED, data)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        WorkUtil.getInstance().cancelAllWork()
-                    } else {
-                        context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
-                    }
+                    WorkUtil.getInstance().cancelAllWork()
                     callkitNotificationManager.clearIncomingNotification(data)
                     removeCall(context, DataCall.fromBundle(data))
                 } catch (error: Exception) {
@@ -209,11 +194,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
             "${context.packageName}.${ACTION_CALL_TIMEOUT}" -> {
                 try {
                     sendEventFlutter(ACTION_CALL_TIMEOUT, data)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        WorkUtil.getInstance().cancelAllWork()
-                    } else {
-                        context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
-                    }
+                    WorkUtil.getInstance().cancelAllWork()
                     if (data.getBoolean(EXTRA_CALLKIT_IS_SHOW_MISSED_CALL_NOTIFICATION, true)) {
                         callkitNotificationManager.showMissCallNotification(data)
                     }
