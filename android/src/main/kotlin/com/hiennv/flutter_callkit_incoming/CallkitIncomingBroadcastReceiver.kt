@@ -138,7 +138,8 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                             val soundPlayerServiceIntent =
                                     Intent(context, CallkitSoundPlayerService::class.java)
                             soundPlayerServiceIntent.putExtras(data)
-                            ContextCompat.startForegroundService(context, soundPlayerServiceIntent)
+                            //ContextCompat.startForegroundService(context, soundPlayerServiceIntent)
+                            context.startService(soundPlayerServiceIntent)
                         }
 
                         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
