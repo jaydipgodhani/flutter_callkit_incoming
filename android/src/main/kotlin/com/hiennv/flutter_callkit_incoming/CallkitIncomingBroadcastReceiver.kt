@@ -177,7 +177,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     callkitNotificationManager.clearIncomingNotification(data)
                     removeCall(context, DataCall.fromBundle(data))
                 } catch (error: Exception) {
-                    Log.d("DECLINE", "fetchDogResponse: 10")
+                    Log.d("DECLINE", "fetchDogResponse: 10" + error)
                     error.printStackTrace()
                 }
             }
